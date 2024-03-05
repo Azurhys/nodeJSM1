@@ -11,7 +11,7 @@ const useMedailles = () => {
       try {
         const response = await axios.get('http://localhost:9000/medailles');
         setMedailles(response.data);
-        console.log(response)
+
         } catch (error) {
             setError(error);
         } finally {

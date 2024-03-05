@@ -21,7 +21,6 @@ const useEpreuves = () => {
     fetchEpreuves();
 
     return () => {
-      // Cleanup function to cancel ongoing requests
     };
   }, []);
 

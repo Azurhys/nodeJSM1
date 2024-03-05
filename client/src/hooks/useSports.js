@@ -11,7 +11,7 @@ const useSports = () => {
       try {
         const response = await axios.get('http://localhost:9000/sports');
         setSports(response.data);
-        console.log(response)
+        
         } catch (error) {
             setError(error);
         } finally {
