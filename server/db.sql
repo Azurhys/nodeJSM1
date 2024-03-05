@@ -54,8 +54,8 @@ INSERT INTO Medailles (epreuve_id, nom_athlete, type_medaille) VALUES
 (4, 'Stefan Holm', 'Argent'),
 (4, 'Bohdan Bondarenko', 'Bronze'),
 (5, 'Hadi Saei', 'Or'),
-(5, 'Steven López', 'Argent'),
-(5, 'Servet Tazegül', 'Bronze'),
+(5, 'Steven Lopez', 'Argent'),
+(5, 'Servet Tazegul', 'Bronze'),
 (6, 'Jade Jones', 'Or'),
 (6, 'Hwang Kyung-seon', 'Argent'),
 (6, 'Wu Jingyu', 'Bronze');
