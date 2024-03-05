@@ -22,3 +22,14 @@ services:
     restart: always
     ports:
       - 8080:8080
+
+  server:
+    build:
+      context: ./server
+    image: node
+    container_name: server
+    ports: 
+      - 9000:9000
+    volumes:
+      - ./server:/app
+    command: ["node", "app/index.js"]
