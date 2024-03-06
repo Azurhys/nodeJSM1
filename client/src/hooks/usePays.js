@@ -57,7 +57,7 @@ const usePays = () => {
     }
   };
 
-  return { pays, loading, error, addPays, updatePays, deletePays };
+  return { pays, loading, error, addPays, updatePays, deletePays, fetchPays };
 };
 
 export default usePays;
