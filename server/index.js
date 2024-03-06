@@ -110,6 +110,121 @@ app.put('/sports/:id', (req, res) => {
     });
 });
 
+// Route pour créer un nouveau pays
+app.post('/pays', (req, res) => {
+    const { nom_pays } = req.body;
+    db.query('INSERT INTO Pays (nom_pays) VALUES (?)', [nom_pays], (err, result) => {
+      if (err) {
+        console.error('Erreur lors de la création du pays :', err);
+        res.status(500).json({ error: 'Erreur lors de la création du pays' });
+      } else {
+        console.log('Pays créé avec succès');
+        res.status(201).json({ message: 'Pays créé avec succès', id: result.insertId });
+      }
+    });
+  });
+  
+  // Route pour récupérer tous les pays
+  app.get('/pays', (req, res) => {
+    db.query('SELECT * FROM Pays', (err, result) => {
+      if (err) {
+        console.error('Erreur lors de la récupération des pays :', err);
+        res.status(500).json({ error: 'Erreur lors de la récupération des pays' });
+      } else {
+        console.log('Pays récupérés avec succès');
+        res.json(result);
+      }
+    });
+  });
+  
+  // Route pour mettre à jour un pays
+  app.put('/pays/:id', (req, res) => {
+    const { nom_pays } = req.body;
+    const id = req.params.id;
+    db.query('UPDATE Pays SET nom_pays = ? WHERE pays_id = ?', [nom_pays, id], (err, result) => {
+      if (err) {
+        console.error('Erreur lors de la mise à jour du pays :', err);
+        res.status(500).json({ error: 'Erreur lors de la mise à jour du pays' });
+      } else {
+        console.log('Pays mis à jour avec succès');
+        res.json({ message: 'Pays mis à jour avec succès' });
+      }
+    });
+  });
+  
+  // Route pour supprimer un pays
+  app.delete('/pays/:id', (req, res) => {
+    const id = req.params.id;
+    db.query('DELETE FROM Pays WHERE pays_id = ?', id, (err, result) => {
+      if (err) {
+        console.error('Erreur lors de la suppression du pays :', err);
+        res.status(500).json({ error: 'Erreur lors de la suppression du pays' });
+      } else {
+        console.log('Pays supprimé avec succès');
+        res.json({ message: 'Pays supprimé avec succès' });
+      }
+    });
+  });
+
+  
+// Route pour ajouter un athlète
+app.post('/athletes', (req, res) => {
+    const { nom_athlete, pays_id } = req.body;
+    const athlete = { nom_athlete, pays_id };
+    db.query('INSERT INTO Athletes SET ?', athlete, (err, result) => {
+      if (err) {
+        console.error('Erreur lors de l\'ajout de l\'athlète :', err);
+        res.status(500).json({ error: 'Erreur lors de l\'ajout de l\'athlète' });
+      } else {
+        console.log('Athlète ajouté avec succès');
+        res.status(201).json({ message: 'Athlète ajouté avec succès', id: result.insertId });
+      }
+    });
+  });
+  
+  // Route pour mettre à jour un athlète
+  app.put('/athletes/:id', (req, res) => {
+    const id = req.params.id;
+    const { nom_athlete, pays_id } = req.body;
+    const athlete = { nom_athlete, pays_id };
+    db.query('UPDATE Athletes SET ? WHERE athlete_id = ?', [athlete, id], (err, result) => {
+      if (err) {
+        console.error('Erreur lors de la mise à jour de l\'athlète :', err);
+        res.status(500).json({ error: 'Erreur lors de la mise à jour de l\'athlète' });
+      } else {
+        console.log('Athlète mis à jour avec succès');
+        res.json({ message: 'Athlète mis à jour avec succès' });
+      }
+    });
+  });
+  // Route pour récupérer tous les athlètes
+    app.get('/athletes', (req, res) => {
+        db.query('SELECT * FROM Athletes', (err, result) => {
+        if (err) {
+            console.error('Erreur lors de la récupération des athlètes :', err);
+            res.status(500).json({ error: 'Erreur lors de la récupération des athlètes' });
+        } else {
+            console.log('Athlètes récupérés avec succès');
+            res.json(result);
+        }
+        });
+    });
+  
+  // Route pour supprimer un athlète
+  app.delete('/athletes/:id', (req, res) => {
+    const id = req.params.id;
+    db.query('DELETE FROM Athletes WHERE athlete_id = ?', id, (err, result) => {
+      if (err) {
+        console.error('Erreur lors de la suppression de l\'athlète :', err);
+        res.status(500).json({ error: 'Erreur lors de la suppression de l\'athlète' });
+      } else {
+        console.log('Athlète supprimé avec succès');
+        res.json({ message: 'Athlète supprimé avec succès' });
+      }
+    });
+  });
+
+  
 // Route pour supprimer un sport spécifique par son ID
 app.delete('/sports/:id', (req, res) => {
     const id = req.params.id;

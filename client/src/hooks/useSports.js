@@ -7,25 +7,26 @@ const useSports = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchSports = async () => {
-      try {
-        const response = await axios.get('http://localhost:9000/sports');
-        setSports(response.data);
-      } catch (error) {
-        setError(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchSports();
   }, []);
 
+  const fetchSports = async () => {
+    try {
+      const response = await axios.get('http://localhost:9000/sports');
+      setSports(response.data);
+    } catch (error) {
+      setError(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const addSport = async (sportData) => {
+    console.log(sportData)
     try {
       setLoading(true);
       const response = await axios.post('http://localhost:9000/sports', sportData);
-      setSports(prevSports => [...prevSports, response.data]);
+      fetchSports();
     } catch (error) {
       setError(error);
     } finally {
@@ -57,7 +58,7 @@ const useSports = () => {
     }
   };
 
-  return { sports, loading, error, addSport, updateSport, deleteSport };
+  return { sports, loading, error, addSport, updateSport, deleteSport, fetchSports };
 };
 
 export default useSports;

@@ -7,25 +7,27 @@ const useEpreuves = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchEpreuves = async () => {
-      try {
-        const response = await axios.get('http://localhost:9000/epreuves');
-        setEpreuves(response.data);
-      } catch (error) {
-        setError(error);
-      } finally {
-        setLoading(false);
-      }
-    };
+    
 
     fetchEpreuves();
   }, []);
 
+  const fetchEpreuves = async () => {
+    try {
+      const response = await axios.get('http://localhost:9000/epreuves');
+      setEpreuves(response.data);
+    } catch (error) {
+      setError(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  
   const addEpreuve = async (epreuveData) => {
     try {
       setLoading(true);
       const response = await axios.post('http://localhost:9000/epreuves', epreuveData);
-      setEpreuves(prevEpreuves => [...prevEpreuves, response.data]);
+      fetchEpreuves();
     } catch (error) {
       setError(error);
     } finally {
