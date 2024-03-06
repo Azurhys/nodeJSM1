@@ -37,7 +37,7 @@ const Dashboard = () => {
     }
     setFormData({ nom_epreuve: '', sport_id: '' });
     setSelectedEpreuveId(null); // Réinitialiser l'épreuve sélectionnée
-    //window.location.reload(); // Recharger la page
+    window.location.reload(); // Recharger la page
   };
 
   const handleUpdate = (id) => {
@@ -56,15 +56,26 @@ const Dashboard = () => {
   return (
     <div className='p-3'>
       <h2>Epreuves</h2>
-      <ul>
-        {epreuves.map(epreuve => (
-          <li key={epreuve.epreuve_id}>
-            {epreuve.nom_epreuve} - {epreuve.site_competition}
-            <button className='btn btn-warning mx-2' onClick={() => handleUpdate(epreuve.epreuve_id)}>Update</button>
-            <button className='btn btn-danger mx-2' onClick={() => handleDelete(epreuve.epreuve_id)}>Delete</button>
-          </li>
-        ))}
-      </ul>
+      <table className="table table-striped">
+            <thead>
+                <tr>
+                <th scope="col">Nom de l'épreuve</th>
+                <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {epreuves.map(epreuve => (
+                <tr key={epreuve.epreuve_id}>
+                    <td>{epreuve.nom_epreuve}</td>
+                    <td>
+                    <button className="btn btn-warning mx-2" onClick={() => handleUpdate(epreuve.epreuve_id)}>Update</button>
+                    <button className="btn btn-danger mx-2" onClick={() => handleDelete(epreuve.epreuve_id)}>Delete</button>
+                    </td>
+                </tr>
+                ))}
+            </tbody>
+            </table>
+
       <h2>{selectedEpreuveId ? 'Modifier une épreuve' : 'Ajouter une épreuve'}</h2>
       <form onSubmit={handleSubmit}>
         <div className='form-group'>

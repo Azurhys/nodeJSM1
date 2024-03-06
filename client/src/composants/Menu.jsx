@@ -26,6 +26,11 @@ const Menu = () => {
                                 </span>
                             </li>
                             <li className="nav-item">
+                                <NavLink to="/dashboard" className={({isActive}) => {
+                                    return isActive ? "nav-link active text-light" : "nav-link text-secondary"
+                                }}>Dashboard</NavLink>
+                            </li>
+                            <li className="nav-item">
                                 <button className="btn btn-link text-light" onClick={handleLogout}>Déconnexion</button>
                             </li>
                         </>
