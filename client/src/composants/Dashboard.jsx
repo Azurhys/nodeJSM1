@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useAuth } from '../context/authContext';
 import { useNavigate } from 'react-router-dom';
 import Athletes from './Athletes';
+import Pays from './Pays';
 
 const Dashboard = () => {
   const { epreuves, loading, error, addEpreuve, updateEpreuve, deleteEpreuve } = useEpreuves();
@@ -148,6 +149,7 @@ const Dashboard = () => {
             <button className="btn btn-success" type="submit">{selectedSportId ? 'Modifier' : 'Ajouter'}</button>
         </form>
         <Athletes />
+        <Pays />
     </div>
   );
 };
