@@ -1,10 +1,14 @@
 const express = require('express');
 const mysql = require('mysql');
 const cors = require('cors');
+const crypto = require('crypto');
+const bodyParser = require('body-parser');
 
 const app = express();
 const port = 9000;
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
 const db = mysql.createConnection({
@@ -20,6 +24,39 @@ db.connect((err) => {
     }
     console.log('Connecté à la base de données MySQL');
 });
+
+function hashPassword(password) {
+    const hash = crypto.createHash('sha256');
+    hash.update(password);
+    return hash.digest('hex');
+}
+
+// Route pour l'authentification de l'utilisateur
+app.post('/login', (req, res) => {
+    const { username, password } = req.body;
+    const hashedPassword = hashPassword(password);
+    // Requête SQL pour récupérer l'utilisateur avec le nom d'utilisateur donné
+    const query = 'SELECT * FROM User WHERE username = ?';
+
+    db.query(query, [username], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: 'Erreur lors de l\'authentification' });
+        } else {
+            if (result.length === 0) {
+                res.status(401).json({ error: 'Nom d\'utilisateur incorrect' });
+            } else {
+                const user = result[0];
+                if (user.password === hashedPassword) {
+                    // Authentification réussie
+                    res.json({ message: 'Authentification réussie' });
+                } else {
+                    res.status(401).json({ error: 'Mot de passe incorrect' });
+                }
+            }
+        }
+    });
+});
+
 
 // Route pour obtenir la liste des sports
 app.get('/sports', (req, res) => {

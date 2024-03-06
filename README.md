@@ -4,6 +4,7 @@ Repository de l'évaluation du module NodeJS d'H3hitema en M1 DEV WEB par Antoin
 # Prérequis :
 
 Avoir Docker sur son poste de travail. 
+ID admin : admin & mot de passe : admin123
 
 # Lancer le projet :
 

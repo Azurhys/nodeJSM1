@@ -7,16 +7,21 @@ import Home from './composants/Accueil';
 import ListeSports from './composants/ListeSports';
 import ListeMedailles from './composants/ListeMedailles'
 import Map from './composants/Map'
+import Login from './composants/Login';
+import { AuthProvider } from './context/authContext';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <BrowserRouter>
-      <Routes>
-        <Route path='/' element={<App />}>
-          <Route index element={<Home />} />
-          <Route path='/listesports' element={<ListeSports />} />
-          <Route path='/listemedailles' element={<ListeMedailles />} />
-          <Route path='/map' element={<Map />} />
-        </Route>
-      </Routes>
-  </BrowserRouter>
+  <AuthProvider>
+    <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<App />}>
+            <Route index element={<Home />} />
+            <Route path='/listesports' element={<ListeSports />} />
+            <Route path='/listemedailles' element={<ListeMedailles />} />
+            <Route path='/map' element={<Map />} />
+            <Route path='/login' element={<Login />} />
+          </Route>
+        </Routes>
+    </BrowserRouter>
+    </AuthProvider>
 )

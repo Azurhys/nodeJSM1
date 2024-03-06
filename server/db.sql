@@ -8,11 +8,21 @@ DROP TABLE IF EXISTS Athletes;
 
 DROP TABLE IF EXISTS Pays;
 
+DROP TABLE IF EXISTS User;
+
 CREATE TABLE Sports (
     sport_id INT AUTO_INCREMENT PRIMARY KEY,
     nom_sport VARCHAR(100) NOT NULL,
     site_competition VARCHAR(100) NOT NULL
 );
+
+CREATE TABLE User (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(100) NOT NULL,
+    password VARCHAR(100) NOT NULL
+);
+
+INSERT INTO User (username, password) VALUES ('admin', '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9');
 
 CREATE TABLE Epreuves (
     epreuve_id INT AUTO_INCREMENT PRIMARY KEY,
