@@ -15,32 +15,26 @@ const ListeMedailles = () => {
     }
     
     const medaillesParEpreuve = {};
-    epreuves.forEach(epreuve => {
-      medaillesParEpreuve[epreuve.id_epreuve] = medailles.filter(medaille => medaille.id_epreuve === epreuve.id_epreuve);
+    medailles.forEach(medaille => {
+        if (!medaillesParEpreuve[medaille.epreuve_id]) {
+            medaillesParEpreuve[medaille.epreuve_id] = [];
+        }
+        medaillesParEpreuve[medaille.epreuve_id].push(medaille);
     });
-    console.log(medaillesParEpreuve)
+    
+    
     return (
         <div className='d-flex align-items-center flex-column'>
-            <h1>Liste des médaillés</h1>
-            <div className='row'>
+            <h1 className='my-5'>Liste des médaillés</h1>
+            <div className='row row-gap-3'>
             {epreuves.map((epreuve) => (
-            <div className='col-4 m-0 p-0 d-flex flex-column' key={epreuve.id_epreuve}>
+            <div className='col-4 m-0 p-0 d-flex flex-column align-items-center' key={epreuve.id_epreuve}>
                 <h2>{epreuve.nom_epreuve}</h2>
-                    {epreuve.epreuve_id == medailles.epreuve_id ? (
-                        <p>🥇 {medaillesParEpreuve[epreuve.id_epreuve][0].nom_athlete}</p>
-                    ) : (
-                        <p>🥇 -</p>
-                    )}
-                    {medaillesParEpreuve[epreuve.id_epreuve]?.[1] ? (
-                        <p>🥈 {medaillesParEpreuve[epreuve.id_epreuve][1].nom_athlete}</p>
-                    ) : (
-                        <p>🥈 -</p>
-                    )}
-                    {medaillesParEpreuve[epreuve.id_epreuve]?.[2] ? (
-                        <p>🥉 {medaillesParEpreuve[epreuve.id_epreuve][2].nom_athlete}</p>
-                    ) : (
-                        <p>🥉 -</p>
-                    )}
+                        {medaillesParEpreuve[epreuve.epreuve_id].map((medaille, index) => (
+                                    <div className={`medaille ${medaille.type_medaille.toLowerCase()}`} key={index}>
+                                        <p>{medaille.type_medaille === 'Or' ? '🥇' : (medaille.type_medaille === 'Argent' ? '🥈' : '🥉')} {medaille.nom_athlete}</p>
+                                    </div>
+                        ))}
             </div>
             ))}
             </div>

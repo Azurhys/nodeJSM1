@@ -4,6 +4,10 @@ DROP TABLE IF EXISTS Medailles;
 DROP TABLE IF EXISTS Epreuves;
 DROP TABLE IF EXISTS Sports;
 
+DROP TABLE IF EXISTS Athletes;
+
+DROP TABLE IF EXISTS Pays;
+
 CREATE TABLE Sports (
     sport_id INT AUTO_INCREMENT PRIMARY KEY,
     nom_sport VARCHAR(100) NOT NULL,
@@ -24,6 +28,23 @@ CREATE TABLE Medailles (
     type_medaille ENUM('Or', 'Argent', 'Bronze') NOT NULL,
     FOREIGN KEY (epreuve_id) REFERENCES Epreuves(epreuve_id)
 );
+
+CREATE TABLE Pays (
+    pays_id INT AUTO_INCREMENT PRIMARY KEY,
+    nom_pays VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE Athletes (
+    athlete_id INT AUTO_INCREMENT PRIMARY KEY,
+    nom_athlete VARCHAR(100) NOT NULL,
+    pays_id INT,
+    FOREIGN KEY (pays_id) REFERENCES Pays(pays_id)
+);
+
+ALTER TABLE Medailles
+ADD COLUMN athlete_id INT,
+ADD FOREIGN KEY (athlete_id) REFERENCES Athletes(athlete_id);
+
 
 INSERT INTO Sports (nom_sport, site_competition) VALUES
 ('Athletisme', 'Stade de France'),
