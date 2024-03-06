@@ -11,18 +11,53 @@ const useSports = () => {
       try {
         const response = await axios.get('http://localhost:9000/sports');
         setSports(response.data);
-        
-        } catch (error) {
-            setError(error);
-        } finally {
-            setLoading(false);
-        }
+      } catch (error) {
+        setError(error);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchSports();
   }, []);
 
-  return { sports, loading, error };
+  const addSport = async (sportData) => {
+    try {
+      setLoading(true);
+      const response = await axios.post('http://localhost:9000/sports', sportData);
+      setSports(prevSports => [...prevSports, response.data]);
+    } catch (error) {
+      setError(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const updateSport = async (id, sportData) => {
+    try {
+      setLoading(true);
+      await axios.put(`http://localhost:9000/sports/${id}`, sportData);
+      setSports(prevSports => prevSports.map(sport => (sport.sport_id === id ? { ...sport, ...sportData } : sport)));
+    } catch (error) {
+      setError(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const deleteSport = async (id) => {
+    try {
+      setLoading(true);
+      await axios.delete(`http://localhost:9000/sports/${id}`);
+      setSports(prevSports => prevSports.filter(sport => sport.sport_id !== id));
+    } catch (error) {
+      setError(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { sports, loading, error, addSport, updateSport, deleteSport };
 };
 
 export default useSports;

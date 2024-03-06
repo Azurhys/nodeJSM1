@@ -28,7 +28,7 @@ CREATE TABLE Epreuves (
     epreuve_id INT AUTO_INCREMENT PRIMARY KEY,
     nom_epreuve VARCHAR(100) NOT NULL,
     sport_id INT,
-    FOREIGN KEY (sport_id) REFERENCES Sports(sport_id)
+    FOREIGN KEY (sport_id) REFERENCES Sports(sport_id) ON DELETE CASCADE
 );
 
 CREATE TABLE Medailles (
@@ -36,7 +36,7 @@ CREATE TABLE Medailles (
     epreuve_id INT,
     nom_athlete VARCHAR(100) NOT NULL,
     type_medaille ENUM('Or', 'Argent', 'Bronze') NOT NULL,
-    FOREIGN KEY (epreuve_id) REFERENCES Epreuves(epreuve_id)
+    FOREIGN KEY (epreuve_id) REFERENCES Epreuves(epreuve_id) ON DELETE CASCADE
 );
 
 CREATE TABLE Pays (
@@ -48,12 +48,12 @@ CREATE TABLE Athletes (
     athlete_id INT AUTO_INCREMENT PRIMARY KEY,
     nom_athlete VARCHAR(100) NOT NULL,
     pays_id INT,
-    FOREIGN KEY (pays_id) REFERENCES Pays(pays_id)
+    FOREIGN KEY (pays_id) REFERENCES Pays(pays_id) ON DELETE CASCADE
 );
 
 ALTER TABLE Medailles
 ADD COLUMN athlete_id INT,
-ADD FOREIGN KEY (athlete_id) REFERENCES Athletes(athlete_id);
+ADD FOREIGN KEY (athlete_id) REFERENCES Athletes(athlete_id) ON DELETE CASCADE;
 
 
 INSERT INTO Sports (nom_sport, site_competition) VALUES

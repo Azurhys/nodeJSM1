@@ -151,7 +151,7 @@ app.get('/epreuves/:id', (req, res) => {
 // Créer une nouvelle épreuve
 app.post('/epreuves', (req, res) => {
     const { nom_epreuve, site_competition } = req.body;
-    db.query('INSERT INTO Epreuves (nom_epreuve, site_competition) VALUES (?, ?)', [nom_epreuve, site_competition], (err, result) => {
+    db.query('INSERT INTO Epreuves (nom_epreuve, sport_id) VALUES (?, ?)', [nom_epreuve, site_competition], (err, result) => {
         if (err) {
             res.status(500).json({ error: 'Erreur lors de la création de l\'épreuve' });
         } else {
@@ -163,8 +163,8 @@ app.post('/epreuves', (req, res) => {
 // Mettre à jour une épreuve existante
 app.put('/epreuves/:id', (req, res) => {
     const id = req.params.id;
-    const { nom_epreuve, site_competition } = req.body;
-    db.query('UPDATE Epreuves SET nom_epreuve = ?, site_competition = ? WHERE epreuve_id = ?', [nom_epreuve, site_competition, id], (err, result) => {
+    const { nom_epreuve, sport_id } = req.body;
+    db.query('UPDATE Epreuves SET nom_epreuve = ?, sport_id = ? WHERE epreuve_id = ?', [nom_epreuve, sport_id, id], (err, result) => {
         if (err) {
             res.status(500).json({ error: 'Erreur lors de la mise à jour de l\'épreuve' });
         } else {

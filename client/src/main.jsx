@@ -9,6 +9,7 @@ import ListeMedailles from './composants/ListeMedailles'
 import Map from './composants/Map'
 import Login from './composants/Login';
 import { AuthProvider } from './context/authContext';
+import Dashboard from './composants/Dashboard';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <AuthProvider>
@@ -20,6 +21,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             <Route path='/listemedailles' element={<ListeMedailles />} />
             <Route path='/map' element={<Map />} />
             <Route path='/login' element={<Login />} />
+            <Route path='/dashboard' element={<Dashboard />} />
           </Route>
         </Routes>
     </BrowserRouter>

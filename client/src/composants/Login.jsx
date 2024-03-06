@@ -12,7 +12,7 @@ const Login = () => {
         e.preventDefault();
         try {
             await login(username, password);
-            navigate('/')
+            navigate('/dashboard')
         } catch (error) {
             console.error('Erreur de connexion :', error.message);
         }
