@@ -6,6 +6,7 @@ import { useAuth } from '../context/authContext';
 import { useNavigate } from 'react-router-dom';
 import Athletes from './Athletes';
 import Pays from './Pays';
+import Medailles from './Medailles';
 
 const Dashboard = () => {
   const { epreuves, loading, error, addEpreuve, updateEpreuve, deleteEpreuve } = useEpreuves();
@@ -150,6 +151,7 @@ const Dashboard = () => {
         </form>
         <Athletes />
         <Pays />
+        <Medailles />
     </div>
   );
 };

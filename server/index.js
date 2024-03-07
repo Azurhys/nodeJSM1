@@ -300,15 +300,51 @@ app.delete('/epreuves/:id', (req, res) => {
     });
 });
 
-app.get('/medailles', (req, res) => {
-    db.query('SELECT * FROM Medailles', (err, result) => {
-        if(err) {
-            res.status(500).json({ error: 'Erreur lors de la récupération des données'})
-        } else {
-            res.json(result)
-        }
-    })
-})
+app.post('/medailles', (req, res) => {
+    const { epreuve_id, athlete_id, nom_athlete, type_medaille } = req.body;
+    const query = 'INSERT INTO Medailles (epreuve_id, athlete_id, nom_athlete, type_medaille) VALUES (?, ?, ?, ?)';
+    db.query(query, [epreuve_id, athlete_id, nom_athlete, type_medaille], (err, result) => {
+      if (err) throw err;
+      res.status(201).send('Medal added successfully');
+    });
+  });
+  
+  // Read all medals
+  app.get('/medailles', (req, res) => {
+    db.query('SELECT * FROM Medailles', (err, rows) => {
+      if (err) throw err;
+      res.json(rows);
+    });
+  });
+  
+  // Read medal by id
+  app.get('/medailles/:id', (req, res) => {
+    const id = req.params.id;
+    db.query('SELECT * FROM Medailles WHERE medaille_id = ?', [id], (err, rows) => {
+      if (err) throw err;
+      res.json(rows);
+    });
+  });
+  
+  // Update medal by id
+  app.put('/medailles/:id', (req, res) => {
+    const id = req.params.id;
+    const { epreuve_id, athlete_id, nom_athlete, type_medaille } = req.body;
+    const query = 'UPDATE Medailles SET epreuve_id = ?, athlete_id = ?, nom_athlete = ?, type_medaille = ? WHERE medaille_id = ?';
+    db.query(query, [epreuve_id, athlete_id, nom_athlete, type_medaille, id], (err, result) => {
+      if (err) throw err;
+      res.send('Medal updated successfully');
+    });
+  });
+  
+  // Delete medal by id
+  app.delete('/medailles/:id', (req, res) => {
+    const id = req.params.id;
+    db.query('DELETE FROM Medailles WHERE medaille_id = ?', [id], (err, result) => {
+      if (err) throw err;
+      res.send('Medal deleted successfully');
+    });
+  });
 
 app.listen(port, () => {
     console.log(`Serveur démarré sur http://localhost:${port}`);
